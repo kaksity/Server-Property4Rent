@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
+using FirebirdSql.Data.FirebirdClient;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Server.Models.Agents;
@@ -18,8 +19,7 @@ namespace Server.DataAccess.Agent
         }
         private IDbConnection dbConnection{
             get{
-               
-                return new MySqlConnection(_configuration.GetConnectionString("default"));
+                return new FbConnection(_configuration.GetConnectionString("firebird"));
             }
         }
         public async Task CreateAgent(AgentModel agentModel, AgentBioDetailModel agentBioDetailModel)
@@ -31,10 +31,10 @@ namespace Server.DataAccess.Agent
                     var transaction = connection.BeginTransaction();
                     try
                     {
-                        string query = "INSERT INTO `agents`(`Id`, `PhoneNumber`, `Password`, `IsDeleted`, `CreatedAt`, `UpdatedAt`) VALUES (@Id,@PhoneNumber,@Password,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                        string query = "INSERT INTO agents(Id, PhoneNumber, Password, IsDeleted, CreatedAt, UpdatedAt) VALUES (@Id,@PhoneNumber,@Password,@IsDeleted,@CreatedAt,@UpdatedAt)";
                         await connection.ExecuteAsync(query,agentModel,transaction);
                         
-                        query = "INSERT INTO agentbiodetails(Id,AgentId,FullName,NIN,DateOfBirth,EmailAddress,ContactAddress,IsDeleted,CreatedAt,UpdatedAt) VALUES(@Id,@AgentId,@FullName,@NIN,@DateOfBirth,@EmailAddress,@ContactAddress,@IsDeleted,@CreatedAt,@UpdatedAt);";
+                        query = "INSERT INTO agentbiodetails(Id,AgentId,FullName,NIN,DateOfBirth,EmailAddress,ContactAddress,IsDeleted,CreatedAt,UpdatedAt) VALUES(@Id,@AgentId,@FullName,@NIN,@DateOfBirth,@EmailAddress,@ContactAddress,@IsDeleted,@CreatedAt,@UpdatedAt)";
                         await connection.ExecuteAsync(query,agentBioDetailModel,transaction);
                         transaction.Commit();
                         connection.Close();
@@ -73,17 +73,20 @@ namespace Server.DataAccess.Agent
 
         public async Task<AgentModel> GetAgentByPhoneNumber(string phoneNumber)
         {
-            //try
-            //{
+            try
+            {
                 using(IDbConnection connection = dbConnection){
-                    string query = @"SELECT `Id`, `PhoneNumber`, `Password`, `IsDeleted`, `CreatedAt`, `UpdatedAt` FROM `agents` WHERE `PhoneNumber`=@PhoneNumber AND `IsDeleted`=0";
-                    return await connection.QueryFirstOrDefaultAsync<AgentModel>(query,new {PhoneNumber=phoneNumber});
+                    connection.Open();
+                    string query = @"SELECT Id, PhoneNumber,Password, IsDeleted, CreatedAt, UpdatedAt FROM agents WHERE PhoneNumber=@PhoneNumber AND IsDeleted=false";
+                    var result = await connection.QueryFirstOrDefaultAsync<AgentModel>(query,new {PhoneNumber=phoneNumber});
+                    connection.Close();
+                    return result;
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

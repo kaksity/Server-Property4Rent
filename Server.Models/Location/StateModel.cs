@@ -1,13 +1,11 @@
 using System;
 
-namespace Server.Models.Agents
+namespace Server.Models.Location
 {
-    public class AgentDocumentModel
+    public class StateModel
     {
         public string Id { get; set; }
-        public string AgentId { get; set; }
-        public string DocumentPath { get; set; }
-        public string DocumentType { get; set; }
+        public string Name { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }

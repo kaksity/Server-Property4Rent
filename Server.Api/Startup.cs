@@ -12,8 +12,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Server.DataAccess.Agent;
+using Server.DataAccess.Documents;
+using Server.DataAccess.House;
+using Server.DataAccess.Location;
 using Server.Services.Agent;
 using Server.Services.Authentication;
+using Server.Services.Document;
+using Server.Services.House;
+using Server.Services.Location;
 
 namespace Server.Api
 {
@@ -31,10 +37,17 @@ namespace Server.Api
         {
 
             services.AddControllers();
+            
             services.AddScoped<IAgentService,AgentService>();
             services.AddScoped<IAgentRepository,AgentRepository>();
             services.AddScoped<IAuthenticationService,AuthenticationService>();
-            
+            services.AddScoped<ILocationService,LocationService>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IDocumentService,DocumentService>();
+            services.AddScoped<IDocumentRepository,DocumentRepository>();
+            services.AddScoped<IHouseTypeRepository,HouseTypeRepository>();
+            services.AddScoped<IHouseTypeService,HouseTypeService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server.Api", Version = "v1" });

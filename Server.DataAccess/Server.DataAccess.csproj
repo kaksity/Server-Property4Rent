@@ -3,12 +3,13 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../Server.Models/Server.Models.csproj"/>
+    <ProjectReference Include="../Server.Models/Server.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.90"/>
-    <PackageReference Include="MySql.Data" Version="8.0.26"/>
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22"/>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0"/>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="FirebirdSql.Data.FirebirdClient" Version="8.5.2" />
+    <PackageReference Include="MySql.Data" Version="8.0.26" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
   </ItemGroup>
 </Project>
