@@ -31,10 +31,10 @@ namespace Server.DataAccess.Agent
                     var transaction = connection.BeginTransaction();
                     try
                     {
-                        string query = "INSERT INTO agents(Id, PhoneNumber, Password, IsDeleted, CreatedAt, UpdatedAt) VALUES (@Id,@PhoneNumber,@Password,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                        string query = "INSERT INTO agents(AgentId, PhoneNumber, Password, IsDeleted, CreatedAt, UpdatedAt) VALUES (@AgentId,@PhoneNumber,@Password,@IsDeleted,@CreatedAt,@UpdatedAt)";
                         await connection.ExecuteAsync(query,agentModel,transaction);
                         
-                        query = "INSERT INTO agentbiodetails(Id,AgentId,FullName,NIN,DateOfBirth,EmailAddress,ContactAddress,IsDeleted,CreatedAt,UpdatedAt) VALUES(@Id,@AgentId,@FullName,@NIN,@DateOfBirth,@EmailAddress,@ContactAddress,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                        query = "INSERT INTO agentbiodetails(AgentBioDetailId,AgentId,FullName,NIN,DateOfBirth,EmailAddress,ContactAddress,IsDeleted,CreatedAt,UpdatedAt) VALUES(@AgentBioDetailId,@AgentId,@FullName,@NIN,@DateOfBirth,@EmailAddress,@ContactAddress,@IsDeleted,@CreatedAt,@UpdatedAt)";
                         await connection.ExecuteAsync(query,agentBioDetailModel,transaction);
                         transaction.Commit();
                         connection.Close();
@@ -77,7 +77,7 @@ namespace Server.DataAccess.Agent
             {
                 using(IDbConnection connection = dbConnection){
                     connection.Open();
-                    string query = @"SELECT Id, PhoneNumber,Password, IsDeleted, CreatedAt, UpdatedAt FROM agents WHERE PhoneNumber=@PhoneNumber AND IsDeleted=false";
+                    string query = @"SELECT AgentId, PhoneNumber,Password, IsDeleted, CreatedAt, UpdatedAt FROM agents WHERE PhoneNumber=@PhoneNumber AND IsDeleted=false";
                     var result = await connection.QueryFirstOrDefaultAsync<AgentModel>(query,new {PhoneNumber=phoneNumber});
                     connection.Close();
                     return result;

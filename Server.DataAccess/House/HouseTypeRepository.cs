@@ -31,7 +31,7 @@ namespace Server.DataAccess.House
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"INSERT INTO HouseTypes(Id,Name,IsDeleted,CreatedAt,UpdatedAt) VALUES (@Id,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                    string query = @"INSERT INTO HouseTypes(HouseTypeId,Name,IsDeleted,CreatedAt,UpdatedAt) VALUES (@HouseTypeId,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
                     await connection.ExecuteAsync(query,model);
                 }
             }
@@ -48,7 +48,7 @@ namespace Server.DataAccess.House
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"UPDATE housetypes SET Isdeleted = true WHERE Id = @Id AND IsDeleted=false";    
+                    string query = @"UPDATE housetypes SET Isdeleted = true WHERE HouseTypeId = @Id AND IsDeleted=false";    
                     await connection.ExecuteAsync(query,new { Id = id});
                 }
             }
@@ -65,7 +65,7 @@ namespace Server.DataAccess.House
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "SELECT Id,Name,CreatedAt,UpdatedAt FROM housetypes WHERE isDeleted=false ORDER BY Name ASC"; 
+                    string query = "SELECT HouseTypeId,Name,CreatedAt,UpdatedAt FROM housetypes WHERE isDeleted=false ORDER BY Name ASC"; 
                     return await connection.QueryAsync<HouseTypeModel>(query);
                 }
             }
@@ -82,7 +82,7 @@ namespace Server.DataAccess.House
             {
                 using (IDbConnection connection = dbConnection) 
                 {
-                    string query = "SELECT Id,Name,CreatedAt,UpdatedAt FROM housetypes WHERE Id = @Id AND IsDeleted=false";
+                    string query = "SELECT HouseTypeId,Name,CreatedAt,UpdatedAt FROM housetypes WHERE HouseTypeId = @Id AND IsDeleted=false";
                     return await connection.QueryFirstOrDefaultAsync<HouseTypeModel>(query,new {Id = id});
                 }
             }

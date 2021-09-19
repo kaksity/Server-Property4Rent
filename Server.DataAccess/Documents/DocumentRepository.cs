@@ -30,7 +30,7 @@ namespace Server.DataAccess.Documents
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "INSERT INTO documents(Id,Name,IsDeleted,CreatedAt,UpdatedAt) VALUES (@Id,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                    string query = "INSERT INTO documents(DocumentId,Name,IsDeleted,CreatedAt,UpdatedAt) VALUES (@DocumentId,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
                     await connection.ExecuteAsync(query,model);
                 }
             }
@@ -47,7 +47,7 @@ namespace Server.DataAccess.Documents
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "UPDATE documents SET IsDeleted=true WHERE Id = @Id AND IsDeleted = false";
+                    string query = "UPDATE documents SET IsDeleted=true WHERE DocumentId = @Id AND IsDeleted = false";
                     await connection.ExecuteAsync(query,new { Id = id});
                 }
             }
@@ -64,7 +64,7 @@ namespace Server.DataAccess.Documents
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "SELECT Id,Name FROM documents WHERE IsDeleted=false ORDER BY Name ASC";
+                    string query = "SELECT DocumentId,Name FROM documents WHERE IsDeleted=false ORDER BY Name ASC";
                     return await connection.QueryAsync<DocumentModel>(query);
                 }
             }
@@ -81,7 +81,7 @@ namespace Server.DataAccess.Documents
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "SELECT Id,Name FROM documents WHERE Id=@Id AND IsDeleted=false";
+                    string query = "SELECT DocumentId,Name FROM documents WHERE DocumentId=@Id AND IsDeleted=false";
                     return await connection.QueryFirstOrDefaultAsync<DocumentModel>(query,new {Id=id});
                 }
             }

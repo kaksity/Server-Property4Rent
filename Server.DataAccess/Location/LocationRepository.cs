@@ -31,7 +31,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"INSERT INTO lgas (Id,StateId, Name, IsDeleted, CreatedAt, UpdatedAt) VALUES (@Id,@StateId,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                    string query = @"INSERT INTO lgas (LgaId,StateId, Name, IsDeleted, CreatedAt, UpdatedAt) VALUES (@LgaId,@StateId,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
                     await connection.ExecuteAsync(query,model);                   
                 }
             }
@@ -47,7 +47,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"INSERT INTO states (Id, Name, IsDeleted, CreatedAt, UpdatedAt) VALUES (@Id,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
+                    string query = @"INSERT INTO states (StateId, Name, IsDeleted, CreatedAt, UpdatedAt) VALUES (@StateIds,@Name,@IsDeleted,@CreatedAt,@UpdatedAt)";
                     await connection.ExecuteAsync(query,model);                   
                 }
             }
@@ -64,7 +64,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"UPDATE lgas SET IsDeleted = true WHERE Id=@Id AND IsDeleted=false";
+                    string query = @"UPDATE lgas SET IsDeleted = true WHERE LgaId=@Id AND IsDeleted=false";
                     await connection.ExecuteAsync(query,new {
                         Id = id
                     });
@@ -82,7 +82,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"UPDATE states SET IsDeleted = true WHERE Id=@Id AND IsDeleted=false";
+                    string query = @"UPDATE states SET IsDeleted = true WHERE StateId=@Id AND IsDeleted=false";
                     await connection.ExecuteAsync(query,new {
                         Id = id
                     });
@@ -100,7 +100,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "SELECT Id, Name FROM lgas WHERE StateId = @StateId AND IsDeleted=false ORDER BY Name ASC";
+                    string query = "SELECT LgaId, Name FROM lgas WHERE StateId = @StateId AND IsDeleted=false ORDER BY Name ASC";
                     return await connection.QueryAsync<LgaModel>(query, new {StateId = stateId});
                 }                
             }
@@ -117,7 +117,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = "SELECT Id, Name FROM states WHERE IsDeleted=false ORDER BY Name ASC";
+                    string query = "SELECT StateId, Name FROM states WHERE IsDeleted=false ORDER BY Name ASC";
                     return await connection.QueryAsync<StateModel>(query);
                 }
             }
@@ -134,7 +134,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"SELECT Id,StateId, Name,IsDeleted FROM lgas WHERE Id=@Id AND IsDeleted=false";
+                    string query = @"SELECT LgaId,StateId, Name,IsDeleted FROM lgas WHERE LgaId=@Id AND IsDeleted=false";
                     return await connection.QueryFirstOrDefaultAsync<LgaModel>(query,new {
                         Id = id
                     });
@@ -152,7 +152,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"SELECT Id, Name,IsDeleted FROM states WHERE Id=@Id AND IsDeleted=false";
+                    string query = @"SELECT StateId, Name,IsDeleted FROM states WHERE StateId=@Id AND IsDeleted=false";
                     return await connection.QueryFirstOrDefaultAsync<StateModel>(query,new {
                         Id = id
                     });
@@ -170,7 +170,7 @@ namespace Server.DataAccess.Location
             {
                 using (IDbConnection connection = dbConnection)
                 {
-                    string query = @"SELECT Id, Name,IsDeleted FROM states WHERE Name=@Name AND IsDeleted=false";
+                    string query = @"SELECT LgaId, Name,IsDeleted FROM states WHERE Name=@Name AND IsDeleted=false";
                     
                     return await connection.QueryFirstOrDefaultAsync<StateModel>(query,new {
                         Name = stateName
