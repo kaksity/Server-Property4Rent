@@ -4,7 +4,7 @@ namespace Server.Models.Agents
 {
     public class AgentDocumentModel
     {
-        public string Id { get; set; }
+        public string AgentDocumentId { get; set; }
         public string AgentId { get; set; }
         public string DocumentPath { get; set; }
         public string DocumentType { get; set; }

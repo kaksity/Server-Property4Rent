@@ -19,7 +19,7 @@ namespace Server.Services.Location
         public async Task CreateLgaAsync(RequestLgaDto dto)
         {
             var lga = new LgaModel{
-                Id = Guid.NewGuid().ToString(),
+                LgaId = Guid.NewGuid().ToString(),
                 StateId = dto.StateId,
                 Name = dto.Name.ToUpper(),
                 IsDeleted = false,
@@ -33,7 +33,7 @@ namespace Server.Services.Location
         public async Task CreateStateAsync(RequestStateDto dto)
         {
             var state = new StateModel{
-                Id = Guid.NewGuid().ToString(),
+                StateId = Guid.NewGuid().ToString(),
                 Name = dto.Name.ToUpper(),
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,

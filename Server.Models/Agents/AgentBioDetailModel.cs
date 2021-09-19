@@ -4,7 +4,7 @@ namespace Server.Models.Agents
 {
     public class AgentBioDetailModel
     {
-        public string Id { get; set; }
+        public string AgentBioDetailId { get; set; }
         public string AgentId { get; set; }
         public string FullName { get; set; }
         public string NIN { get; set; }

@@ -47,7 +47,7 @@ namespace Server.Api.Controllers.Authentication
                 StatusCode = 200,
                 Message = "Log In was successful",
                 Data = new ResponseLoginDto{
-                    Token = _authenticationService.GenerateJWTToken(agent.Id)
+                    Token = _authenticationService.GenerateJWTToken(agent.AgentId)
                 }
             };
             return Ok(response);

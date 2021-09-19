@@ -17,7 +17,7 @@ namespace Server.Services.Document
         public async Task CreateDocumentAsync(RequestDocumentDto dto)
         {
             var document = new DocumentModel{
-                Id = Guid.NewGuid().ToString(),
+                DocumentId = Guid.NewGuid().ToString(),
                 Name = dto.Name.ToUpper(),
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,

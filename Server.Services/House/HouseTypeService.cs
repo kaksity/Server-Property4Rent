@@ -17,7 +17,7 @@ namespace Server.Services.House
         public async Task CreateHouseTypeAsync(RequestHouseTypeDto dto)
         {
             var houseType = new HouseTypeModel {
-                Id = Guid.NewGuid().ToString(),
+                HouseTypeId = Guid.NewGuid().ToString(),
                 Name = dto.Name.ToUpper(),
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,

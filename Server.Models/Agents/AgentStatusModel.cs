@@ -4,7 +4,7 @@ namespace Server.Models.Agents
 {
     public class AgentStatusModel
     {
-        public string Id { get; set; }
+        public string AgentStatusId { get; set; }
         public string AgentId { get; set; }
         public bool IsVerified { get; set; }
         public bool IsRejected { get; set; }

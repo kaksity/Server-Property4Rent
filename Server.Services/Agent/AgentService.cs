@@ -34,7 +34,7 @@ namespace Server.Services.Agent
             string agentBiodeDetailId = Guid.NewGuid().ToString();
 
             var agent = new AgentModel(){
-                Id = agentModelId,
+                AgentId = agentModelId,
                 PhoneNumber = model.PhoneNumber,
                 Password = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 IsDeleted = false,
@@ -42,7 +42,7 @@ namespace Server.Services.Agent
                 UpdatedAt = DateTime.Now
             };
             var agentBioDetail = new AgentBioDetailModel(){
-                Id = agentBiodeDetailId,
+                AgentBioDetailId = agentBiodeDetailId,
                 AgentId = agentModelId,
                 FullName = model.FullName.ToUpper(),
                 IsDeleted = false,
