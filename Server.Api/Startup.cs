@@ -48,8 +48,10 @@ namespace Server.Api
             services.AddScoped<IHouseTypeRepository,HouseTypeRepository>();
             services.AddScoped<IHouseTypeService,HouseTypeService>();
 
+            
             services.AddSwaggerGen(c =>
             {
+                
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Server.Api", Version = "v1" });
             });
         }
