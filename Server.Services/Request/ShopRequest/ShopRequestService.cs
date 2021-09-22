@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Server.DataAccess.Request.ShopRequest;
 using Server.Dtos.Request.ShopRequest;
 using Server.Models.Request;
@@ -10,8 +11,10 @@ namespace Server.Services.Request.ShopRequest
     public class ShopRequestService : IShopRequestService
     {
         private readonly IShopRequestRepository _shopRequestRepository;
-        public ShopRequestService(IShopRequestRepository shopRequestRepository)
+        private readonly IMapper _mapper;
+        public ShopRequestService(IShopRequestRepository shopRequestRepository,IMapper mapper)
         {
+            _mapper = mapper;
             _shopRequestRepository = shopRequestRepository;
         }
 
@@ -35,14 +38,16 @@ namespace Server.Services.Request.ShopRequest
             await _shopRequestRepository.AddShopRequestAsync(shopRequest);
         }
 
-        public async Task<IEnumerable<ShopRequestModel>> GetAllShopRequestsAsync()
+        public async Task<IEnumerable<ReadDetailShopRequestDto>> GetAllShopRequestsAsync()
         {
-            return await _shopRequestRepository.GetAllShopRequestsAsync();
+            var shopRequest = await _shopRequestRepository.GetAllShopRequestsAsync();
+            return _mapper.Map<IEnumerable<ReadDetailShopRequestDto>>(shopRequest);
         }
 
-        public async Task<ShopRequestModel> GetShopRequestAsync(string shopRequestId)
+        public async Task<ReadDetailShopRequestDto> GetShopRequestAsync(string shopRequestId)
         {
-            return await _shopRequestRepository.GetShopRequestAsync(shopRequestId);
+            var shopRequests = await _shopRequestRepository.GetShopRequestAsync(shopRequestId);
+            return _mapper.Map<ReadDetailShopRequestDto>(shopRequests);
         }
     }
 }

@@ -20,9 +20,9 @@ namespace Server.Api.Controllers.Request
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllShopRequests()
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadDetailShopRequestDto>>>> GetAllShopRequests()
         {
-            return Ok(new ServiceReponse<IEnumerable<ShopRequestModel>>{
+            return Ok(new ServiceReponse<IEnumerable<ReadDetailShopRequestDto>>{
                 StatusCode = 200,
                 Success = true,
                 Message = "Retrived Shop Requests records",
@@ -30,19 +30,20 @@ namespace Server.Api.Controllers.Request
             });
         }
         [HttpGet("{shopRequestId}")]
-        public async Task<ActionResult<ServiceReponse<ShopRequestModel>>> GetShopRequest(string shopRequestId){
+        public async Task<ActionResult<ServiceReponse<ReadDetailShopRequestDto>>> GetShopRequest(string shopRequestId){
             var shopRequest = await _shopRequestService.GetShopRequestAsync(shopRequestId);
 
             if(shopRequest == null)
             {
                 return NotFound();
             }
-            return Ok(new ServiceReponse<ShopRequestModel>{
+            return Ok(new ServiceReponse<ReadDetailShopRequestDto>{
                 StatusCode = 200,
                 Message = "Retrived Shop Request record",
                 Success = true,
                 Data = shopRequest
             });
+            
         }
 
         [HttpPost]
