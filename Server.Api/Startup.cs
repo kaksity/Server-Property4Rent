@@ -20,7 +20,7 @@ using Server.Services.Authentication;
 using Server.Services.Document;
 using Server.Services.House;
 using Server.Services.Location;
-
+using AutoMapper;
 namespace Server.Api
 {
     public class Startup
@@ -48,7 +48,8 @@ namespace Server.Api
             services.AddScoped<IHouseTypeRepository,HouseTypeRepository>();
             services.AddScoped<IHouseTypeService,HouseTypeService>();
 
-            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddSwaggerGen(c =>
             {
                 

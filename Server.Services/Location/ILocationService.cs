@@ -14,8 +14,8 @@ namespace Server.Services.Location
         Task<IEnumerable<StateModel>> GetAllStatesAsync();
         Task DeleteStateAsync(string id);
         Task CreateLgaAsync(RequestLgaDto dto);
-        Task<IEnumerable<LgaModel>> GetAllLgasAsync(string stateId);
-        Task<LgaModel> GetLgaByIdAsync(string id);
+        Task<IEnumerable<ReadLgaDto>> GetAllLgasAsync(string stateId);
+        Task<ReadLgaDto> GetLgaByIdAsync(string id);
         Task DeleteLgaAsync(string id);
     }
 }

@@ -34,8 +34,8 @@ namespace Server.Api.Controllers.Location
             });
         }
         [HttpGet("{stateId}")]
-        public async Task<ActionResult<ServiceReponse<IEnumerable<LgaModel>>>> GetAllLgas(string stateId){
-            return Ok(new ServiceReponse<IEnumerable<LgaModel>>{
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadLgaDto>>>> GetAllLgas(string stateId){
+            return Ok(new ServiceReponse<IEnumerable<ReadLgaDto>>{
                 StatusCode = 200,
                 Success = true,
                 Message = "Retrived lga records",

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Server.DataAccess.Location;
 using Server.Dtos.Lga;
 using Server.Dtos.State;
@@ -11,8 +12,10 @@ namespace Server.Services.Location
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;
-        public LocationService(ILocationRepository locationRepository)
+        private readonly IMapper _mapper;
+        public LocationService(ILocationRepository locationRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _locationRepository = locationRepository;
         }
 
@@ -52,9 +55,11 @@ namespace Server.Services.Location
             await _locationRepository.DeleteStateAsync(id);
         }
 
-        public async Task<IEnumerable<LgaModel>> GetAllLgasAsync(string stateId)
+        public async Task<IEnumerable<ReadLgaDto>> GetAllLgasAsync(string stateId)
         {
-            return await _locationRepository.GetAllLgasAsync(stateId);
+            var lgas = await _locationRepository.GetAllLgasAsync(stateId);
+
+            return _mapper.Map<IEnumerable<ReadLgaDto>>(lgas);
         }
 
         public async Task<IEnumerable<StateModel>> GetAllStatesAsync()
@@ -62,9 +67,10 @@ namespace Server.Services.Location
             return await _locationRepository.GetAllStatesAsync();
         }
 
-        public async Task<LgaModel> GetLgaByIdAsync(string id)
+        public async Task<ReadLgaDto> GetLgaByIdAsync(string id)
         {
-            return await _locationRepository.GetLgaByIdAsync(id);
+            var lga = await _locationRepository.GetLgaByIdAsync(id);
+            return _mapper.Map<ReadLgaDto>(lga);
         }
 
         public async Task<StateModel> GetStateByIdAsync(string id)
