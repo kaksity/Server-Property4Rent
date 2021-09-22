@@ -15,11 +15,13 @@ using Server.DataAccess.Agent;
 using Server.DataAccess.Documents;
 using Server.DataAccess.House;
 using Server.DataAccess.Location;
+using Server.DataAccess.Request.ShopRequest;
 using Server.Services.Agent;
 using Server.Services.Authentication;
 using Server.Services.Document;
 using Server.Services.House;
 using Server.Services.Location;
+using Server.Services.Request.ShopRequest;
 
 namespace Server.Api
 {
@@ -47,7 +49,8 @@ namespace Server.Api
             services.AddScoped<IDocumentRepository,DocumentRepository>();
             services.AddScoped<IHouseTypeRepository,HouseTypeRepository>();
             services.AddScoped<IHouseTypeService,HouseTypeService>();
-
+            services.AddScoped<IShopRequestRepository,ShopRequestRepository>();
+            services.AddScoped<IShopRequestService,ShopRequestService>();
             
             services.AddSwaggerGen(c =>
             {
