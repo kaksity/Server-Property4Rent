@@ -19,7 +19,7 @@ namespace Server.Api.Controllers.House
         }
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponseWithoutData>> CreateNewHouseType(RequestHouseTypeDto dto)
+        public async Task<ActionResult<ServiceResponseWithoutData>> CreateNewHouseType(CreateHouseTypeDto dto)
         {
             if (ModelState.IsValid == false)
             {
@@ -35,9 +35,9 @@ namespace Server.Api.Controllers.House
         }
 
         [HttpGet]
-        public async Task<ActionResult<ServiceReponse<IEnumerable<HouseTypeModel>>>> GetAllHouseTypes()
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadHouseTypeDto>>>> GetAllHouseTypes()
         {
-            return Ok(new ServiceReponse<IEnumerable<HouseTypeModel>> {
+            return Ok(new ServiceReponse<IEnumerable<ReadHouseTypeDto>> {
                 Success = true,
                 StatusCode = 200,
                 Message = "Retrived house types record",

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Server.DataAccess.House;
 using Server.Dtos.House;
 using Server.Models.House;
@@ -10,11 +11,13 @@ namespace Server.Services.House
     public class HouseTypeService : IHouseTypeService
     {
         private readonly IHouseTypeRepository _houseTypeRepository;
-        public HouseTypeService(IHouseTypeRepository houseTypeRepository)
+        private readonly IMapper _mapper;
+        public HouseTypeService(IHouseTypeRepository houseTypeRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _houseTypeRepository = houseTypeRepository;
         }
-        public async Task CreateHouseTypeAsync(RequestHouseTypeDto dto)
+        public async Task CreateHouseTypeAsync(CreateHouseTypeDto dto)
         {
             var houseType = new HouseTypeModel {
                 HouseTypeId = Guid.NewGuid().ToString(),
@@ -32,14 +35,16 @@ namespace Server.Services.House
             await _houseTypeRepository.DeleteHouseTypeAsync(id);
         }
 
-        public async Task<IEnumerable<HouseTypeModel>> GetAllHouseTypesAsync()
+        public async Task<IEnumerable<ReadHouseTypeDto>> GetAllHouseTypesAsync()
         {
-            return await _houseTypeRepository.GetAllHouseTypesAsync();
+            var houseTypes = await _houseTypeRepository.GetAllHouseTypesAsync();
+            return _mapper.Map<IEnumerable<ReadHouseTypeDto>>(houseTypes);
         }
 
-        public async Task<HouseTypeModel> GetHouseTypeByIdAsync(string id)
+        public async Task<ReadHouseTypeDto> GetHouseTypeByIdAsync(string id)
         {
-            return await _houseTypeRepository.GetHouseTypeByIdAsync(id);
+            var houseType = await _houseTypeRepository.GetHouseTypeByIdAsync(id);
+            return _mapper.Map<ReadHouseTypeDto>(houseType);
         }
     }
 }
