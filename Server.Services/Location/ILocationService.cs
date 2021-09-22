@@ -8,10 +8,10 @@ namespace Server.Services.Location
 {
     public interface ILocationService
     {
-        Task CreateStateAsync(RequestStateDto dto);
-        Task<StateModel> GetStateByNameAsync(string stateName);
-        Task<StateModel> GetStateByIdAsync(string id);
-        Task<IEnumerable<StateModel>> GetAllStatesAsync();
+        Task CreateStateAsync(CreateStateDto dto);
+        Task<ReadStateDto> GetStateByNameAsync(string stateName);
+        Task<ReadStateDto> GetStateByIdAsync(string id);
+        Task<IEnumerable<ReadStateDto>> GetAllStatesAsync();
         Task DeleteStateAsync(string id);
         Task CreateLgaAsync(CreateLgaDto dto);
         Task<IEnumerable<ReadLgaDto>> GetAllLgasAsync(string stateId);

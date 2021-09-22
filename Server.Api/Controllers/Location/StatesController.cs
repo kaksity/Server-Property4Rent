@@ -20,7 +20,7 @@ namespace Server.Api.Controllers.Location
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostNewState(RequestStateDto dto)
+        public async Task<IActionResult> PostNewState(CreateStateDto dto)
         {
             if (ModelState.IsValid == false)
             {
@@ -48,9 +48,9 @@ namespace Server.Api.Controllers.Location
         }
         
         [HttpGet]
-        public async Task<ActionResult<ServiceReponse<IEnumerable<StateModel>>>> GetAllStates()
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadStateDto>>>> GetAllStates()
         {
-            ServiceReponse<IEnumerable<StateModel>> response = new ServiceReponse<IEnumerable<StateModel>>(){
+            ServiceReponse<IEnumerable<ReadStateDto>> response = new ServiceReponse<IEnumerable<ReadStateDto>>(){
                 StatusCode = 200,
                 Success = true,
                 Message = "Retrieved state records",
