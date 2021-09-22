@@ -1,6 +1,6 @@
 namespace Server.Dtos.Document
 {
-    public class RequestDocumentDto
+    public class CreateDocumentDto
     {
         public string Name { get; set; }
     }

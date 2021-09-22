@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Server.Dtos.Lga
 {
-    public class RequestLgaDto
+    public class CreateLgaDto
     {
         [Required]
         public string StateId { get; set; }

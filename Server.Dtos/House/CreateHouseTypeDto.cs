@@ -1,6 +1,6 @@
 namespace Server.Dtos.House
 {
-    public class RequestHouseTypeDto
+    public class CreateHouseTypeDto
     {
         public string Name { get; set; }
     }

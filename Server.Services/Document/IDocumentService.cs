@@ -7,9 +7,9 @@ namespace Server.Services.Document
 {
     public interface IDocumentService
     {
-        Task CreateDocumentAsync(RequestDocumentDto dto);
-         Task<DocumentModel> GetDocumentByIdAsync(string id);
-         Task<IEnumerable<DocumentModel>> GetAllDocumentsAsync();
+        Task CreateDocumentAsync(CreateDocumentDto dto);
+         Task<ReadDocumentDto> GetDocumentByIdAsync(string id);
+         Task<IEnumerable<ReadDocumentDto>> GetAllDocumentsAsync();
          Task DeleteDocumentAsync(string id);
     }
 }

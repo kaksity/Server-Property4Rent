@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Server.DataAccess.Location;
 using Server.Dtos.Lga;
 using Server.Dtos.State;
@@ -11,13 +12,16 @@ namespace Server.Services.Location
     public class LocationService : ILocationService
     {
         private readonly ILocationRepository _locationRepository;
-        public LocationService(ILocationRepository locationRepository)
+        private readonly IMapper _mapper;
+        public LocationService(ILocationRepository locationRepository, IMapper mapper)
         {
+            _mapper = mapper;
             _locationRepository = locationRepository;
         }
 
-        public async Task CreateLgaAsync(RequestLgaDto dto)
+        public async Task CreateLgaAsync(CreateLgaDto dto)
         {
+
             var lga = new LgaModel{
                 LgaId = Guid.NewGuid().ToString(),
                 StateId = dto.StateId,
@@ -26,11 +30,11 @@ namespace Server.Services.Location
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
-
+            
            await _locationRepository.CreateLgaAsync(lga);
         }
 
-        public async Task CreateStateAsync(RequestStateDto dto)
+        public async Task CreateStateAsync(CreateStateDto dto)
         {
             var state = new StateModel{
                 StateId = Guid.NewGuid().ToString(),
@@ -52,29 +56,35 @@ namespace Server.Services.Location
             await _locationRepository.DeleteStateAsync(id);
         }
 
-        public async Task<IEnumerable<LgaModel>> GetAllLgasAsync(string stateId)
+        public async Task<IEnumerable<ReadLgaDto>> GetAllLgasAsync(string stateId)
         {
-            return await _locationRepository.GetAllLgasAsync(stateId);
+            var lgas = await _locationRepository.GetAllLgasAsync(stateId);
+
+            return _mapper.Map<IEnumerable<ReadLgaDto>>(lgas);
         }
 
-        public async Task<IEnumerable<StateModel>> GetAllStatesAsync()
+        public async Task<IEnumerable<ReadStateDto>> GetAllStatesAsync()
         {
-            return await _locationRepository.GetAllStatesAsync();
+            var states = await _locationRepository.GetAllStatesAsync();
+            return _mapper.Map<IEnumerable<ReadStateDto>>(states);
         }
 
-        public async Task<LgaModel> GetLgaByIdAsync(string id)
+        public async Task<ReadLgaDto> GetLgaByIdAsync(string id)
         {
-            return await _locationRepository.GetLgaByIdAsync(id);
+            var lga = await _locationRepository.GetLgaByIdAsync(id);
+            return _mapper.Map<ReadLgaDto>(lga);
         }
 
-        public async Task<StateModel> GetStateByIdAsync(string id)
+        public async Task<ReadStateDto> GetStateByIdAsync(string id)
         {
-            return await _locationRepository.GetStateByIdAsync(id);
+            var states = await _locationRepository.GetStateByIdAsync(id);
+            return _mapper.Map<ReadStateDto>(states);
         }
 
-        public async Task<StateModel> GetStateByNameAsync(string stateName)
+        public async Task<ReadStateDto> GetStateByNameAsync(string stateName)
         {
-            return await _locationRepository.GetStateByNameAsync(stateName.ToUpper());
+            var state = await _locationRepository.GetStateByNameAsync(stateName.ToUpper());
+            return _mapper.Map<ReadStateDto>(state);
         }
     }
 }

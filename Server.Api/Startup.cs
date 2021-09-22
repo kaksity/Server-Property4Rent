@@ -21,8 +21,9 @@ using Server.Services.Authentication;
 using Server.Services.Document;
 using Server.Services.House;
 using Server.Services.Location;
-using Server.Services.Request.ShopRequest;
 
+using Server.Services.Request.ShopRequest;
+using AutoMapper;
 namespace Server.Api
 {
     public class Startup
@@ -51,7 +52,7 @@ namespace Server.Api
             services.AddScoped<IHouseTypeService,HouseTypeService>();
             services.AddScoped<IShopRequestRepository,ShopRequestRepository>();
             services.AddScoped<IShopRequestService,ShopRequestService>();
-            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 

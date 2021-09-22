@@ -19,7 +19,7 @@ namespace Server.Api.Controllers.Location
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLgaAsync(RequestLgaDto dto){
+        public async Task<IActionResult> CreateLgaAsync(CreateLgaDto dto){
             if (ModelState.IsValid == false)
             { 
               return BadRequest();  
@@ -34,8 +34,8 @@ namespace Server.Api.Controllers.Location
             });
         }
         [HttpGet("{stateId}")]
-        public async Task<ActionResult<ServiceReponse<IEnumerable<LgaModel>>>> GetAllLgas(string stateId){
-            return Ok(new ServiceReponse<IEnumerable<LgaModel>>{
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadLgaDto>>>> GetAllLgas(string stateId){
+            return Ok(new ServiceReponse<IEnumerable<ReadLgaDto>>{
                 StatusCode = 200,
                 Success = true,
                 Message = "Retrived lga records",
