@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Server.DataAccess.Request.ShopRequest;
 using Server.Dtos.Request.ShopRequest;
@@ -32,6 +33,16 @@ namespace Server.Services.Request.ShopRequest
             };    
 
             await _shopRequestRepository.AddShopRequestAsync(shopRequest);
+        }
+
+        public async Task<IEnumerable<ShopRequestModel>> GetAllShopRequestsAsync()
+        {
+            return await _shopRequestRepository.GetAllShopRequestsAsync();
+        }
+
+        public async Task<ShopRequestModel> GetShopRequestAsync(string shopRequestId)
+        {
+            return await _shopRequestRepository.GetShopRequestAsync(shopRequestId);
         }
     }
 }

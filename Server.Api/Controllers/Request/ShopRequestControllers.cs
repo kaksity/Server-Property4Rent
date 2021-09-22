@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Server.Dtos.Request.ShopRequest;
 using Server.Models.General;
+using Server.Models.Request;
 using Server.Services.Request.ShopRequest;
 
 namespace Server.Api.Controllers.Request
@@ -17,6 +19,31 @@ namespace Server.Api.Controllers.Request
             _shopRequestService = shopRequestService;    
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetAllShopRequests()
+        {
+            return Ok(new ServiceReponse<IEnumerable<ShopRequestModel>>{
+                StatusCode = 200,
+                Success = true,
+                Message = "Retrived Shop Requests records",
+                Data = await _shopRequestService.GetAllShopRequestsAsync()
+            });
+        }
+        [HttpGet("{shopRequestId}")]
+        public async Task<ActionResult<ServiceReponse<ShopRequestModel>>> GetShopRequest(string shopRequestId){
+            var shopRequest = await _shopRequestService.GetShopRequestAsync(shopRequestId);
+
+            if(shopRequest == null)
+            {
+                return NotFound();
+            }
+            return Ok(new ServiceReponse<ShopRequestModel>{
+                StatusCode = 200,
+                Message = "Retrived Shop Request record",
+                Success = true,
+                Data = shopRequest
+            });
+        }
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponseWithoutData>> CreateShopRequest([FromBody] CreateShopRequestDto dto){

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
@@ -45,6 +46,53 @@ namespace Server.DataAccess.Request.ShopRequest
                         );
                     ";
                     await connection.ExecuteAsync(sqlQuery,model);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<IEnumerable<ShopRequestModel>> GetAllShopRequestsAsync()
+        {
+            try
+            {
+                using (IDbConnection connection = dbConnection)
+                {
+                    string sqlQuery = @"
+                        SELECT 
+                            SHOPREQUESTID,FULLNAME,PHONENUMBER,SHOPNEARESTLANDMARK,STATEID,LGAID,DESCRIPTION,MINPRICE,MAXPRICE,ISDELETED,CREATEDAT,UPDATEDAT
+                        FROM
+                            SHOPREQUESTS 
+                        WHERE
+                            IsDeleted = false ;
+                        ";
+                    return await connection.QueryAsync<ShopRequestModel>(sqlQuery);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<ShopRequestModel> GetShopRequestAsync(string shopRequestId)
+        {
+            try
+            {
+                using(IDbConnection connection = dbConnection)
+                {
+                     string sqlQuery = @"
+                        SELECT 
+                            SHOPREQUESTID,FULLNAME,PHONENUMBER,SHOPNEARESTLANDMARK,STATEID,LGAID,DESCRIPTION,MINPRICE,MAXPRICE,ISDELETED,CREATEDAT,UPDATEDAT
+                        FROM
+                            SHOPREQUESTS 
+                        WHERE
+                            ShopRequestId = @ShopRequestId AND IsDeleted = false;
+                        ";
+                   
+                    return await connection.QueryFirstOrDefaultAsync<ShopRequestModel>(sqlQuery,new { shopRequestId = shopRequestId});
                 }
             }
             catch(Exception ex)
