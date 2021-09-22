@@ -19,8 +19,9 @@ namespace Server.Services.Location
             _locationRepository = locationRepository;
         }
 
-        public async Task CreateLgaAsync(RequestLgaDto dto)
+        public async Task CreateLgaAsync(CreateLgaDto dto)
         {
+
             var lga = new LgaModel{
                 LgaId = Guid.NewGuid().ToString(),
                 StateId = dto.StateId,
@@ -29,7 +30,7 @@ namespace Server.Services.Location
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
-
+            
            await _locationRepository.CreateLgaAsync(lga);
         }
 

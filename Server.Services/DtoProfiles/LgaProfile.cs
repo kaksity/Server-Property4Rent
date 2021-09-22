@@ -9,6 +9,7 @@ namespace Server.Services.DtoProfiles
         public LgaProfile()
         {
             CreateMap<LgaModel,ReadLgaDto>();
+            CreateMap<CreateLgaDto,LgaModel>();
         }
     }
 }

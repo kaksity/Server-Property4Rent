@@ -19,7 +19,7 @@ namespace Server.Api.Controllers.Location
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateLgaAsync(RequestLgaDto dto){
+        public async Task<IActionResult> CreateLgaAsync(CreateLgaDto dto){
             if (ModelState.IsValid == false)
             { 
               return BadRequest();  
