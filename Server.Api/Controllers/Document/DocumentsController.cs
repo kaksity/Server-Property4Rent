@@ -19,7 +19,7 @@ namespace Server.Api.Controllers.Document
         }        
 
         [HttpPost]
-        public async Task<IActionResult> CreateDocument([FromBody] RequestDocumentDto dto) 
+        public async Task<IActionResult> CreateDocument([FromBody] CreateDocumentDto dto) 
         {
             if (ModelState.IsValid ==false)
             {
@@ -59,9 +59,9 @@ namespace Server.Api.Controllers.Document
 
         }
         [HttpGet]
-        public async Task<ActionResult<ServiceReponse<IEnumerable<DocumentModel>>>> GetAllDocument()
+        public async Task<ActionResult<ServiceReponse<IEnumerable<ReadDocumentDto>>>> GetAllDocument()
         {
-            return Ok(new ServiceReponse<IEnumerable<DocumentModel>>{
+            return Ok(new ServiceReponse<IEnumerable<ReadDocumentDto>>{
                 StatusCode = 200,
                 Success = true,
                 Message = "Retrived document record",
